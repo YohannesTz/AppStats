@@ -69,7 +69,7 @@ fun AppUsageListItem(
                     GradientProgressbar(
                         indicatorHeight = 8.dp,
                         indicatorPadding = 8.dp,
-                        progress = appUsage.usagePercentage.toFloat() / 100
+                        progress = appUsage.usagePercentage.toFloat() + 30
                     )
                 }
             }

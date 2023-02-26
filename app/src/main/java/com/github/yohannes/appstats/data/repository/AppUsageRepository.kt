@@ -290,7 +290,12 @@ class AppUsageRepository @Inject constructor(
                     val applicationInfo =
                         context.packageManager.getApplicationInfo(usageStat.packageName, 0)
 
-                    val usagePercentage = (usageStat.totalTimeInForeground * 100 / totalTime)
+                    val usagePercentage = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        ((usageStat.totalTimeInForeground + usageStat.totalTimeVisible + usageStat.totalTimeForegroundServiceUsed)* 100 / totalTime)
+                    } else {
+                        (usageStat.totalTimeInForeground * 100) / totalTime
+                    }
+                    Log.e("usagePercentage", usagePercentage.toString())
                     val usageString = getDurationBreakdown(usageStat.totalTimeInForeground)
                     usageWithPercentage.add(
                         UsagePercentage(
